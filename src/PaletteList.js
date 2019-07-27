@@ -4,15 +4,13 @@ import MiniPalette from "./MiniPalette";
 
 export default class PaletteList extends Component {
   render() {
-    const { palettes } = this.props;
+    const { seedColors } = this.props;
     return (
       <div>
         <MiniPalette />
         <h1>Colorly</h1>
-        {palettes.map(palette => (
-          <p>
-            <Link to={`/palette/${palette.id}`}>{palette.paletteName}</Link>
-          </p>
+        {seedColors.map(palette => (
+         <MiniPalette {...palette}></MiniPalette>
         ))}
       </div>
     );
