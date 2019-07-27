@@ -20,7 +20,6 @@ export default class Palette extends Component {
   }
 
   render() {
-    
     const { colors } = this.props.palette;
     const { level, format } = this.state;
     const colorBoxes = colors[level].map(color => (
