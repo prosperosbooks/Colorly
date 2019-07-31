@@ -7,9 +7,10 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import "./Navbar.css";
+import { withStyles } from "@material-ui/styles";
+import styles from "./styles/NavbarStyles";
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = { format: "hex", open: false };
@@ -27,18 +28,18 @@ export default class Navbar extends Component {
   }
 
   render() {
-    const { level, changeLevel, showingSlider } = this.props;
+    const { level, changeLevel, showingSlider, classes } = this.props;
     const { format } = this.state;
 
     return (
-      <header className="Navbar">
-        <div className="logo">
+      <header className={classes.Navbar}>
+        <div className={classes.logo}>
           <Link to="/">colorly</Link>
         </div>
 
         {showingSlider && (
-          <div className="slider">
-            <div className="slider-container">
+          <div className={classes.slider}>
+            <div>
               <span>Level: {level} </span>
               <Slider
                 defaultValue={level}
@@ -51,7 +52,7 @@ export default class Navbar extends Component {
           </div>
         )}
 
-        <div className="select-container">
+        <div className={classes.selectContainer}>
           <Select value={format} onChange={this.handleFormatChange}>
             <MenuItem value="hex">HEX - #ffffff</MenuItem>
             <MenuItem value="rgb">RGB - rgb(255,255,255)</MenuItem>
@@ -92,3 +93,5 @@ export default class Navbar extends Component {
     );
   }
 }
+
+export default withStyles(styles)(Navbar);

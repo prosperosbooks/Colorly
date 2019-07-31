@@ -1,4 +1,4 @@
-.Navbar {
+/* .Navbar {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -25,17 +25,17 @@
   width: 340px;
   margin: 0 10px;
   display: inline-block;
-}
+} */
 
-.rc-slider-track {
+/* .rc-slider-track {
   background-color: transparent;
-}
+} */
 
-.rc-slider-rail {
+/* .rc-slider-rail {
   height: 8px;
-}
+} */
 
-.rc-slider-handle,
+/* .rc-slider-handle,
 .rc-slider-handle:active,
 .rc-slider-handle:focus,
 .rc-slider-handle:hover {
@@ -47,9 +47,9 @@
   height: 13px;
   margin-left: -7px;
   margin-top: -3px;
-}
-
+} */
+/* 
 .select-container {
     margin-left: auto;
     margin-right: 1rem;
-}
+} */
