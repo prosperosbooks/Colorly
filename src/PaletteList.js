@@ -1,41 +1,12 @@
 import React, { Component } from "react";
 import MiniPalette from "./MiniPalette";
 import { withStyles } from "@material-ui/styles";
-
-const styles = {
-  root: {
-    backgroundColor: "blue",
-    height: "100vh",
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "center"
-  },
-  container: {
-    width: "50%",
-    display: "flex",
-    alignItems: "flex-start",
-    flexDirection: "column",
-    flexWrap: "wrap"
-  },
-  nav: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    color: "white"
-  },
-  palettes: {
-    boxSizing: "border-box",
-    width: "100%",
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 30%)",
-    gridGap: "5%"
-  }
-};
+import styles from "./styles/PaletteListStyles";
 
 class PaletteList extends Component {
-    goToPalette(id) {
-        this.props.history.push(`/palette/${id}`)
-    }
+  goToPalette(id) {
+    this.props.history.push(`/palette/${id}`);
+  }
   render() {
     const { seedColors, classes } = this.props;
     return (
@@ -46,7 +17,10 @@ class PaletteList extends Component {
           </nav>
           <div className={classes.palettes}>
             {seedColors.map(palette => (
-              <MiniPalette {...palette} goToPalette={() => this.goToPalette(palette.id)} />
+              <MiniPalette
+                {...palette}
+                goToPalette={() => this.goToPalette(palette.id)}
+              />
             ))}
           </div>
         </div>
