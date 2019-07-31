@@ -136,6 +136,7 @@
 /* 
 .ColorBox.go-back {
     background-color: black;
+    position: relative;
 }
 
 .back-button.ColorBox {
