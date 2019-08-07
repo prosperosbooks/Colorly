@@ -5,7 +5,7 @@ import Palette from "./Palette";
 import PaletteList from "./PaletteList";
 import seedColors from "./seedColors";
 import SingleColorPalette from "./SingleColorPalette";
-import NewPaletteForm from './NewPaletteForm'
+import NewPaletteForm from "./NewPaletteForm";
 
 class App extends React.Component {
   findPalette(id) {
@@ -16,11 +16,7 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route
-          exact
-          path="/palette/new"
-          render={() => <NewPaletteForm /> }
-        />
+        <Route exact path="/palette/new" render={() => <NewPaletteForm />} />
         <Route
           exact
           path="/"
