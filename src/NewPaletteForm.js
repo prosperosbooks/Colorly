@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 export default function NewPaletteForm({ savePalette, history, palettes }) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [currentColor, setCurrentColor] = useState("teal");
   const [colors, createColor] = useState([]);
   const [newColorName, setNewColorName] = useState("");
@@ -95,9 +95,10 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
     );
 
     ValidatorForm.addValidationRule("isPaletteNameUnique", value =>
-    palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase())
-  );
-  
+      palettes.every(
+        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+      )
+    );
   }, [colors, currentColor]);
 
   const addNewColor = () => {
@@ -163,12 +164,13 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
 
           <ValidatorForm onSubmit={handleSavePalette}>
             <TextValidator
+              autoFocus
               name="newPaletteName"
               onChange={handleNameChange}
               value={newPaletteName}
               label="Palette Name"
-              validators={["required", 'isPaletteNameUnique']}
-              errorMessages={["Enter Palette Name", 'Name already used']}
+              validators={["required", "isPaletteNameUnique"]}
+              errorMessages={["Enter Palette Name", "Name already used"]}
             />
           </ValidatorForm>
 
@@ -212,6 +214,7 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
 
         <ValidatorForm onSubmit={addNewColor}>
           <TextValidator
+            autoFocus
             name="newColorName"
             value={newColorName}
             onChange={handleNameChange}
