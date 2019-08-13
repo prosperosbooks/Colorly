@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import { ChromePicker } from "react-color";
 import DraggableColorBox from "./DraggableColorBox";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import uuid from "uuid/v4";
 
 const drawerWidth = 400;
 
@@ -99,7 +100,7 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
         ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
       )
     );
-  }, [colors, currentColor]);
+  }, [colors, currentColor, palettes]);
 
   const addNewColor = () => {
     const newColor = {
@@ -133,8 +134,12 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
       colors: colors
     };
     savePalette(newPalette);
-
     history.push("/");
+  };
+
+  const handleClickDelete = colorName => {
+    const updatedBoxes = colors.filter(color => color.name !== colorName);
+    createColor(updatedBoxes);
   };
 
   return (
@@ -244,7 +249,11 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
         <div className={classes.drawerHeader} />
 
         {colors.map(color => (
-          <DraggableColorBox color={color} />
+          <DraggableColorBox
+            key={uuid()}
+            handleClickDelete={() => handleClickDelete(color.name)}
+            color={color}
+          />
         ))}
       </main>
     </div>
