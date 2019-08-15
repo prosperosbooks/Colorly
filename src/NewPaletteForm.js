@@ -78,11 +78,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewPaletteForm({ savePalette, history, palettes }) {
+  const defaultProps = {
+    maxColors: 20
+  };
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [currentColor, setCurrentColor] = useState("teal");
-  const [colors, createColor] = useState([]);
+  const [colors, createColor] = useState(palettes[0].colors);
   const [newColorName, setNewColorName] = useState("");
   const [newPaletteName, setNewPaletteName] = useState("");
 
@@ -126,6 +130,19 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
       : setNewColorName(e.target.value);
   };
 
+  const clearColors = () => {
+    createColor([]);
+  };
+
+  const addRandomColor = () => {
+    const allColors = palettes.map(p => p.colors);
+
+    let randomIndex = Math.floor(Math.random() * allColors.length);
+    let randomColors = allColors[randomIndex];
+
+    createColor(randomColors);
+  };
+
   const handleSavePalette = () => {
     let newName = newPaletteName;
     const newPalette = {
@@ -142,12 +159,13 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
   };
 
   const handleClickDelete = colorName => {
-    console.log('clicked')
-    console.log(colorName)
+    console.log("clicked");
+    console.log(colorName);
     const updatedBoxes = colors.filter(color => color.name !== colorName);
     createColor(updatedBoxes);
-    
   };
+
+  const paletteIsFull = colors.length >= defaultProps.maxColors;
 
   return (
     <div className={classes.root}>
@@ -212,10 +230,10 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
         <Divider />
         <Typography variant="h4">Design Custom Palette</Typography>
         <div>
-          <Button variant="contained" color="secondary">
+          <Button onClick={clearColors} variant="contained" color="secondary">
             Clear Palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button onClick={addRandomColor} variant="contained" color="primary">
             Random Color
           </Button>
         </div>
@@ -242,9 +260,10 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
             type="submit"
             variant="contained"
             color="primary"
-            style={{ backgroundColor: currentColor }}
+            disabled={paletteIsFull}
+            style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
           >
-            Add Color
+            {paletteIsFull ? "Palette is Full" : "Add Color"}
           </Button>
         </ValidatorForm>
       </Drawer>
@@ -254,12 +273,7 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
         })}
       >
         <div className={classes.drawerHeader} />
-        <DraggableColorList
-          axis="xy"
-          colors={colors}
-          handleClickDelete={handleClickDelete}
-          onSortEnd={onSortEnd}
-        />
+        <DraggableColorList axis="xy" colors={colors} onSortEnd={onSortEnd} />
       </main>
     </div>
   );

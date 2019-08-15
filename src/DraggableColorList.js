@@ -13,7 +13,7 @@ const DraggableColorList = SortableContainer(
           <DraggableColorBox
             index={i}
             key={uuid()}
-            handleClickDelete={() => handleClickDelete(color.name)}
+            handleClickDelete={handleClickDelete}
             color={color}
           />
         ))}
