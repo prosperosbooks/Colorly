@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -49,7 +50,9 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    display: "flex",
+    alignItems: "center"
   },
   drawerHeader: {
     display: "flex",
@@ -74,6 +77,35 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  container: {
+    width: "90%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttons: {
+    width: '100%',
+  },
+  button: {
+    width: '50%'
+  },
+  picker: {
+    width: "90% !important",
+    marginTop: "2rem",
+    marginBottom: "2rem"
+  },
+  addColor: {
+    width: "100%",
+    padding: "1rem",
+    marginTop: "1rem",
+    fontSize: "2rem"
+  },
+  colorNameInput: {
+    width: "100%",
+    height: "70px"
   }
 }));
 
@@ -189,7 +221,7 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
           </IconButton>
 
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Create a Palette
           </Typography>
 
           <ValidatorForm onSubmit={handleSavePalette}>
@@ -207,6 +239,15 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
           <Button type="submit" variant="contained" color="primary">
             Save Palette
           </Button>
+          <Link style={{ textDecoration: "none" }} to="/">
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ marginLeft: "1em" }}
+            >
+              Go Back
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -228,44 +269,63 @@ export default function NewPaletteForm({ savePalette, history, palettes }) {
           </IconButton>
         </div>
         <Divider />
-        <Typography variant="h4">Design Custom Palette</Typography>
-        <div>
-          <Button onClick={clearColors} variant="contained" color="secondary">
-            Clear Palette
-          </Button>
-          <Button onClick={addRandomColor} variant="contained" color="primary">
-            Random Color
-          </Button>
-        </div>
-        <ChromePicker
-          color={currentColor}
-          onChangeComplete={newColor => setCurrentColor(newColor.hex)}
-        />
-
-        <ValidatorForm onSubmit={addNewColor}>
-          <TextValidator
-            autoFocus
-            name="newColorName"
-            value={newColorName}
-            onChange={handleNameChange}
-            validators={["required", "isColorNameUnique", "isColorUnique"]}
-            errorMessages={[
-              "enter a color name",
-              "color name must be unique",
-              "color already used"
-            ]}
+     
+        <div className={classes.container}>
+        <Typography variant="h4" gutterBottom>Design Custom Palette</Typography>
+          <div className={classes.buttons}>
+            <Button
+              className={classes.button}
+              onClick={clearColors}
+              variant="contained"
+              color="secondary"
+            >
+              Clear Palette
+            </Button>
+            <Button
+              className={classes.button}
+              onClick={addRandomColor}
+              variant="contained"
+              color="primary"
+            >
+              Random Color
+            </Button>
+          </div>
+          <ChromePicker
+            className={classes.picker}
+            color={currentColor}
+            onChangeComplete={newColor => setCurrentColor(newColor.hex)}
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={paletteIsFull}
-            style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
-          >
-            {paletteIsFull ? "Palette is Full" : "Add Color"}
-          </Button>
-        </ValidatorForm>
+          <ValidatorForm onSubmit={addNewColor}>
+            <TextValidator
+              className={classes.colorNameInput}
+              variant="filled"
+              placeholder="color name"
+              margin="normal"
+              autoFocus
+              name="newColorName"
+              value={newColorName}
+              onChange={handleNameChange}
+              validators={["required", "isColorNameUnique", "isColorUnique"]}
+              errorMessages={[
+                "Enter a color name",
+                "Color name must be unique",
+                "Color already used"
+              ]}
+            />
+
+            <Button
+              className={classes.addColor}
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={paletteIsFull}
+              style={{ backgroundColor: paletteIsFull ? "grey" : currentColor }}
+            >
+              {paletteIsFull ? "Palette is Full" : "Add Color"}
+            </Button>
+          </ValidatorForm>
+        </div>
       </Drawer>
       <main
         className={clsx(classes.content, {
